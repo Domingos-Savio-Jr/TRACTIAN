@@ -9,6 +9,10 @@ function openSurvey(clientName, actionDescription) {
                 .rating-container { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
                 .rating { cursor: pointer; font-size: 24px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
                 .rating:hover { background-color: #f0f0f0; }
+                .hidden { display: none; }
+                .options-container { margin-top: 20px; }
+                .textarea-container { margin-top: 10px; }
+                textarea { width: 80%; height: 60px; padding: 5px; }
             </style>
         </head>
         <body>
@@ -21,9 +25,37 @@ function openSurvey(clientName, actionDescription) {
                 <div class="rating" onclick="submitRating(4)">🙂 4</div>
                 <div class="rating" onclick="submitRating(5)">😃 5</div>
             </div>
+            
+            <div id="optionsSection" class="hidden">
+                <p>Qual das opções abaixo mais influenciou na sua nota?</p>
+                <div class="options-container">
+                    <input type="radio" name="reason" value="Travamento"> Travamento<br>
+                    <input type="radio" name="reason" value="Demora"> Demora<br>
+                    <input type="radio" name="reason" value="Dificuldade de uso"> Difícil de utilizar<br>
+                    <input type="radio" name="reason" value="Não intuitivo"> Não intuitivo<br>
+                    <input type="radio" name="reason" value="Outros"> Outros<br>
+                </div>
+                <div class="textarea-container">
+                    <p>Poderia detalhar melhor o que ocorreu?</p>
+                    <textarea id="detailedFeedback"></textarea><br>
+                    <button onclick="submitFeedback()">Enviar</button>
+                </div>
+            </div>
+            
             <script>
                 function submitRating(score) {
-                    alert('Obrigado pela sua resposta! Você deu nota ' + score);
+                    document.getElementById("optionsSection").classList.remove("hidden");
+                }
+                
+                function submitFeedback() {
+                    const reason = document.querySelector('input[name="reason"]:checked');
+                    const details = document.getElementById("detailedFeedback").value;
+                    
+                    if (reason) {
+                        alert('Obrigado! Você selecionou: ' + reason.value + '\nDetalhes: ' + details);
+                    } else {
+                        alert('Obrigado! Sua resposta foi registrada.');
+                    }
                     window.close();
                 }
             </script>
@@ -31,10 +63,11 @@ function openSurvey(clientName, actionDescription) {
         </html>
     `;
 
-    const surveyWindow = window.open("", "_blank", "width=400,height=300");
+    const surveyWindow = window.open("", "_blank", "width=400,height=500");
     surveyWindow.document.write(surveyHTML);
     surveyWindow.document.close();
 }
 
 // Exemplo de chamada da função com nome do cliente e ação realizada
 openSurvey("José", "finalizar sua ordem de serviço");
+

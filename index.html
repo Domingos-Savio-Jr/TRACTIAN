@@ -1,0 +1,40 @@
+function openSurvey(clientName, actionDescription) {
+    const surveyHTML = `
+        <html>
+        <head>
+            <title>Pesquisa de Satisfação</title>
+            <style>
+                body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+                h2 { color: #333; }
+                .rating-container { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
+                .rating { cursor: pointer; font-size: 24px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+                .rating:hover { background-color: #f0f0f0; }
+            </style>
+        </head>
+        <body>
+            <h2>Olá, ${clientName}!</h2>
+            <p>Você acabou de ${actionDescription}. Como foi sua experiência?</p>
+            <div class="rating-container">
+                <div class="rating" onclick="submitRating(1)">😡 1</div>
+                <div class="rating" onclick="submitRating(2)">☹️ 2</div>
+                <div class="rating" onclick="submitRating(3)">😐 3</div>
+                <div class="rating" onclick="submitRating(4)">🙂 4</div>
+                <div class="rating" onclick="submitRating(5)">😃 5</div>
+            </div>
+            <script>
+                function submitRating(score) {
+                    alert('Obrigado pela sua resposta! Você deu nota ' + score);
+                    window.close();
+                }
+            </script>
+        </body>
+        </html>
+    `;
+
+    const surveyWindow = window.open("", "_blank", "width=400,height=300");
+    surveyWindow.document.write(surveyHTML);
+    surveyWindow.document.close();
+}
+
+// Exemplo de chamada da função com nome do cliente e ação realizada
+openSurvey("José", "finalizar sua ordem de serviço");
